@@ -39,6 +39,15 @@ public class AppController {
 		}
 	}
 	
+	@GetMapping("/users/{userId}")
+	public ResponseEntity<UserData> fetchUserByUserId(@PathVariable int userId){
+		UserData userData = userService.getUserByUserId(userId);
+		if(userData.toString().isBlank()) {
+			return new ResponseEntity<UserData>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<UserData>(userData,HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("/users")
 	public ResponseEntity<UserData> addUser(@RequestBody UserData user){
